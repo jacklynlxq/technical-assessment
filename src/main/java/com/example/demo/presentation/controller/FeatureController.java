@@ -1,7 +1,7 @@
 package com.example.demo.presentation.controller;
 
-import com.example.demo.domain.dto.AccessRequest;
-import com.example.demo.domain.dto.AccessResponse;
+import com.example.demo.presentation.dto.AccessRequest;
+import com.example.demo.presentation.dto.AccessResponse;
 import com.example.demo.service.AccessManagementServiceImpl;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

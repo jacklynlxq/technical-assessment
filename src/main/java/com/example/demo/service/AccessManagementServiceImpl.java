@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.dto.AccessRequest;
+import com.example.demo.presentation.dto.AccessRequest;
 import com.example.demo.domain.entitiy.Access;
 import com.example.demo.domain.entitiy.Feature;
 import com.example.demo.domain.entitiy.User;
