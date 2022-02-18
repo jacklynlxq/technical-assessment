@@ -1,21 +1,20 @@
 package com.example.demo.infrastructure.entity;
 
 import com.example.demo.domain.entitiy.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name="user")
 public class UserJpaEntity implements User {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @Column(name="user_email")
     private String userEmail;

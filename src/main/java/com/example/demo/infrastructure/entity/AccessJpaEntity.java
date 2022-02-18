@@ -1,21 +1,21 @@
 package com.example.demo.infrastructure.entity;
 
+import com.example.demo.domain.entitiy.Access;
 import com.example.demo.domain.entitiy.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name="Access")
-public class AccessJpaEntity {
+public class AccessJpaEntity implements Access {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     // many to one
     @ManyToOne
@@ -28,5 +28,6 @@ public class AccessJpaEntity {
     private FeatureJpaEntity feature;
 
     @Column(name="access")
-    private boolean userFeatureAccess;
+    private Boolean userFeatureAccess;
+
 }
