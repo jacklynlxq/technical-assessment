@@ -3,9 +3,11 @@ package com.example.demo.presentation.controller;
 import com.example.demo.domain.dto.GetAccessRequest;
 import com.example.demo.domain.dto.GetAccessResponse;
 import com.example.demo.domain.dto.UpdateAccessRequest;
+import com.example.demo.domain.entitiy.Access;
 import com.example.demo.service.AccessManagementServiceImpl;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -50,28 +52,28 @@ public class FeatureController {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity postUserFeatureAccess(@RequestBody UpdateAccessRequest updateAccessRequest){
-        // TODO: pass UpdateAccessRequest to service to repository to add into database
+    public ResponseEntity<Void> postUserFeatureAccess(@RequestBody UpdateAccessRequest updateAccessRequest){
 
-        accessManagementService.updateUserFeatureAccess(updateAccessRequest);
-        //TODO: if not updated, return 304 not modified
+        try{
+            Access access = accessManagementService.updateUserFeatureAccess(updateAccessRequest);
+            logger.info("Access added:" + access);
+        }
+        catch (DataIntegrityViolationException ex){
+            logger.info("Violation of Unique Keys: unit_id & feature_id in Access table (Duplicated record)");
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
+        catch (EntityNotFoundException ex){
+            logger.info("Feature Name or Email not found");
+            logger.info(ex);
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
+        catch (Exception ex){
+            logger.info(ex);
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
 
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-//    @GetMapping("/")
-//    @ResponseBody
-//    public AccessResponse getUserFeatureAccess(AccessRequest accessRequest){
-//        accessRequest.setUserEmail("afs"); // TODO: delete
-//        boolean canAccess = this.accessService.checkUserFeatureAccess(accessRequest);
-//
-//        AccessResponse accessResponse = new AccessResponse();
-//        // TODO: service: checkUserFeatureAccess
-//        accessResponse.setCanAccess(canAccess);
-//
-//        return accessResponse;
-//    }
 
 
 }

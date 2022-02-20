@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAccessResponse {
-    private Boolean canAccess;
+public class UpdateAccessRequest {
+    private String featureName;
+    private String email;
+    private Boolean enable;
 }
