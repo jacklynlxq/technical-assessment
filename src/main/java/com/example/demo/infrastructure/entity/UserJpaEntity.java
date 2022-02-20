@@ -12,10 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name="user")
 public class UserJpaEntity extends BaseEntity implements User {
-//    @Id
-//    @GeneratedValue
-//    private Long id;
-
     @Column(name="user_email")
     private String userEmail;
 

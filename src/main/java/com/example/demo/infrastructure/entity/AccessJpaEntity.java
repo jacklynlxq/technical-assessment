@@ -1,7 +1,6 @@
 package com.example.demo.infrastructure.entity;
 
 import com.example.demo.domain.entitiy.Access;
-import com.example.demo.domain.entitiy.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,10 +11,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity(name="Access")
 public class AccessJpaEntity extends BaseEntity implements Access {
-
-//    @Id
-//    @GeneratedValue
-//    private Long id;
 
     // many to one
     @ManyToOne

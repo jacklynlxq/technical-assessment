@@ -3,6 +3,5 @@ package com.example.demo.domain.repository;
 import com.example.demo.domain.entitiy.Feature;
 
 public interface FeatureRepository {
-
-    Feature findById(long id);
+    Feature findByFeatureName(String name);
 }
