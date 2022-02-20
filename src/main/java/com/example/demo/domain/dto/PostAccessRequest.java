@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateAccessRequest {
+public class PostAccessRequest {
     private String featureName;
     private String email;
     private Boolean enable;

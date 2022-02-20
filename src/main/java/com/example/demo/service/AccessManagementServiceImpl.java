@@ -1,10 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.dto.GetAccessRequest;
-import com.example.demo.domain.dto.UpdateAccessRequest;
+import com.example.demo.domain.dto.PostAccessRequest;
 import com.example.demo.domain.entitiy.Access;
-import com.example.demo.domain.entitiy.Feature;
-import com.example.demo.domain.entitiy.User;
 import com.example.demo.domain.service.AccessManagementService;
 import com.example.demo.infrastructure.entity.AccessJpaEntity;
 import com.example.demo.infrastructure.entity.FeatureJpaEntity;
@@ -17,59 +15,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
 
 @Service
 public class AccessManagementServiceImpl implements AccessManagementService {
     private static final Logger logger = Logger.getLogger(AccessManagementServiceImpl.class);
 
     @Autowired
-    UserJpaRepository userJpaRepository; // inject UserRepository implementation
+    UserJpaRepository userJpaRepository;
 
     @Autowired
-    FeatureJpaRepository featureJpaRepository; // inject FeatureRepository implementation
+    FeatureJpaRepository featureJpaRepository;
 
     @Autowired
-    AccessJpaRepository accessJpaRepository; // inject AccessRepository implementation
+    AccessJpaRepository accessJpaRepository;
 
 
     @Override
     public Access checkUserFeatureAccess(GetAccessRequest getAccessRequest) {
-        // get featureID from featureName
-//        Feature feature = featureJpaRepository.findByFeatureName(getAccessRequest.getFeatureName());
-//        if(feature == null){
-//            throw new EntityNotFoundException("Can't find feature with name: " + getAccessRequest.getFeatureName());
-//        }
-//        logger.info("Feature id: " + feature.getId());
-        Feature feature = getFeatureByFeatureName(getAccessRequest.getFeatureName());
-
 
         // get userId from userEmail
-//        User user = userJpaRepository.findByUserEmail(getAccessRequest.getUserEmail());
-//        if(user == null){
-//            throw new EntityNotFoundException("Can't find user with email: " + getAccessRequest.getUserEmail());
-//        }
-//        logger.info("User id: " + user.getId());
+        UserJpaEntity user = getUserByEmail(getAccessRequest.getUserEmail());
 
-//        long userId = getUserIdByEmail(getAccessRequest.getUserEmail());
-        User user = getUserByEmail(getAccessRequest.getFeatureName());
+        // get featureID from featureName
+        FeatureJpaEntity feature = getFeatureByFeatureName(getAccessRequest.getFeatureName());
 
         return accessJpaRepository.findByUserIdAndFeatureId(user.getId(), feature.getId());
-//        return accessJpaRepository.findByUserIdAndFeatureId(userId, featureId);
     }
 
     @Override
-    public Access updateUserFeatureAccess(UpdateAccessRequest updateAccessRequest){
+    public Access addUserFeatureAccess(PostAccessRequest postAccessRequest){
         // create User object
-        UserJpaEntity user = getUserByEmail(updateAccessRequest.getEmail());
+        UserJpaEntity user = getUserByEmail(postAccessRequest.getEmail());
 
         // create Feature object
-        FeatureJpaEntity feature = getFeatureByFeatureName(updateAccessRequest.getFeatureName());
+        FeatureJpaEntity feature = getFeatureByFeatureName(postAccessRequest.getFeatureName());
 
         // create new AccessJPAEntity
-        AccessJpaEntity access = new AccessJpaEntity(user, feature, updateAccessRequest.getEnable());
+        AccessJpaEntity access = new AccessJpaEntity(user, feature, postAccessRequest.getEnable());
 
-        // call save() from AccessJpaRepository
         return accessJpaRepository.save(access);
     }
 
@@ -77,9 +60,11 @@ public class AccessManagementServiceImpl implements AccessManagementService {
 
         // get user from userEmail
         UserJpaEntity user = userJpaRepository.findByUserEmail(userEmail);
+
         if(user == null){
             throw new EntityNotFoundException("Can't find user with email: " + userEmail);
         }
+
         logger.info("User id: " + user.getId());
 
         return user;
@@ -89,10 +74,13 @@ public class AccessManagementServiceImpl implements AccessManagementService {
 
         // get feature from featureName
         FeatureJpaEntity feature = featureJpaRepository.findByFeatureName(featureName);
+
         if(feature == null){
             throw new EntityNotFoundException("Can't find feature with name: " + featureName);
         }
+
         logger.info("Feature id: " + feature.getId());
+
         return feature;
     }
 }
