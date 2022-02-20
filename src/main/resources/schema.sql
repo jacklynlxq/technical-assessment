@@ -20,7 +20,7 @@ CREATE TABLE access  (
      id BIGINT NOT NULL AUTO_INCREMENT,
      feature_id BIGINT NOT NULL,
      user_id BIGINT NOT NULL,
-     access BOOLEAN NOT NULL DEFAULT true,
+     access BOOLEAN NOT NULL DEFAULT false,
      PRIMARY KEY (id),
      FOREIGN KEY (feature_id) REFERENCES feature(id),
      FOREIGN KEY (user_id) REFERENCES user(id)

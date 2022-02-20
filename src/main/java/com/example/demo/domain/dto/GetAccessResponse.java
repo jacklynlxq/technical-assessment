@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccessResponse {
-    private boolean canAccess;
+public class GetAccessResponse {
+    private Boolean canAccess;
 }

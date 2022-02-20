@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.presentation.dto.AccessRequest;
+import com.example.demo.domain.dto.GetAccessRequest;
+import com.example.demo.domain.dto.UpdateAccessRequest;
 import com.example.demo.domain.entitiy.Access;
 import com.example.demo.domain.entitiy.Feature;
 import com.example.demo.domain.entitiy.User;
@@ -29,22 +30,26 @@ public class AccessManagementServiceImpl implements AccessManagementService {
 
 
     @Override
-    public Access checkUserFeatureAccess(AccessRequest accessRequest) {
+    public Access checkUserFeatureAccess(GetAccessRequest getAccessRequest) {
         // get featureID from featureName
-        Feature feature = featureJpaRepository.findByFeatureName(accessRequest.getFeatureName());
+        Feature feature = featureJpaRepository.findByFeatureName(getAccessRequest.getFeatureName());
         if(feature == null){
-            throw new EntityNotFoundException("can't find feature with name: " + accessRequest.getFeatureName());
+            throw new EntityNotFoundException("can't find feature with name: " + getAccessRequest.getFeatureName());
         }
         logger.info("Feature id: " + feature.getId());
 
         // get userId from userEmail
-        User user = userJpaRepository.findByUserEmail(accessRequest.getUserEmail());
+        User user = userJpaRepository.findByUserEmail(getAccessRequest.getUserEmail());
         if(user == null){
-            throw new EntityNotFoundException("can't find user with email: " + accessRequest.getUserEmail());
+            throw new EntityNotFoundException("can't find user with email: " + getAccessRequest.getUserEmail());
         }
         logger.info("User id: " + user.getId());
 
         return accessJpaRepository.findByUserIdAndFeatureId(user.getId(), feature.getId());
     }
 
+    @Override
+    public void updateUserFeatureAccess(UpdateAccessRequest updateAccessRequest){
+
+    }
 }
