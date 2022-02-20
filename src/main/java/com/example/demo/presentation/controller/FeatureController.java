@@ -5,6 +5,8 @@ import com.example.demo.domain.dto.GetAccessResponse;
 import com.example.demo.domain.dto.PostAccessRequest;
 import com.example.demo.domain.entitiy.Access;
 import com.example.demo.service.AccessManagementServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 
-
+@Api("Feature Controller")
 @Controller
 @RequestMapping("/api/v1/feature")
 public class FeatureController {
@@ -24,6 +26,15 @@ public class FeatureController {
     @Autowired
     AccessManagementServiceImpl accessManagementService;
 
+    /**
+     * @param featureName feature name
+     * @param email user email address
+     * @return Response (if found) along with HTTP Status Code
+     */
+    @ApiOperation(
+            value = "Get User Feature Access",
+            notes="Receives email (user’s email) and featureName as request parameters and returns the example response in JSON format. "
+    )
     @GetMapping
     @ResponseBody
     public ResponseEntity<GetAccessResponse> getUserFeatureAccess(@RequestParam String featureName, @RequestParam String email){
@@ -54,6 +65,14 @@ public class FeatureController {
     }
 
 
+    /**
+     * @param postAccessRequest Consists of email (user email), featureName (feature name) and enable (boolean of access)
+     * @return Empty Response along with HTTP Status Code
+     */
+    @ApiOperation(
+            value = "Post User Feature Access",
+            notes = "Receives the example request body in JSON format and returns an empty response with HTTP Status OK (200) when the database is updated successfully, otherwise returns Http Status Not Modified (304)."
+    )
     @PostMapping
     @ResponseBody
     public ResponseEntity<Void> postUserFeatureAccess(@RequestBody PostAccessRequest postAccessRequest){
