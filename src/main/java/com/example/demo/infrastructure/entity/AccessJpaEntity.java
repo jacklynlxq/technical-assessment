@@ -11,11 +11,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name="Access")
-public class AccessJpaEntity implements Access {
+public class AccessJpaEntity extends BaseEntity implements Access {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+//    @Id
+//    @GeneratedValue
+//    private Long id;
 
     // many to one
     @ManyToOne
