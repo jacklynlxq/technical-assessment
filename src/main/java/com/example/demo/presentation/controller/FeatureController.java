@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 
 @Api("Feature Controller")
-@Controller
+@RestController
 @RequestMapping("/api/v1/feature")
 public class FeatureController {
     private static final Logger logger = Logger.getLogger(FeatureController.class);
@@ -36,7 +36,6 @@ public class FeatureController {
             notes="Receives email (user’s email) and featureName as request parameters and returns the example response in JSON format. "
     )
     @GetMapping
-    @ResponseBody
     public ResponseEntity<GetAccessResponse> getUserFeatureAccess(@RequestParam String featureName, @RequestParam String email){
         logger.info("User email: " + email);
         logger.info("Feature name: " + featureName);
@@ -74,7 +73,6 @@ public class FeatureController {
             notes = "Receives the example request body in JSON format and returns an empty response with HTTP Status OK (200) when the database is updated successfully, otherwise returns Http Status Not Modified (304)."
     )
     @PostMapping
-    @ResponseBody
     public ResponseEntity<Void> postUserFeatureAccess(@RequestBody PostAccessRequest postAccessRequest){
 
         try{
