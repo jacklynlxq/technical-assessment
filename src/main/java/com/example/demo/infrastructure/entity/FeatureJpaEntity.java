@@ -19,4 +19,7 @@ public class FeatureJpaEntity  extends BaseEntity implements Feature {
     @OneToMany(mappedBy="feature", cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private List<AccessJpaEntity> accessList;
 
+    public FeatureJpaEntity(String featureName){
+        this.featureName = featureName;
+    }
 }

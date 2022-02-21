@@ -4,7 +4,7 @@ import com.example.demo.domain.dto.GetAccessRequest;
 import com.example.demo.domain.dto.GetAccessResponse;
 import com.example.demo.domain.dto.PostAccessRequest;
 import com.example.demo.domain.entitiy.Access;
-import com.example.demo.service.AccessManagementServiceImpl;
+import com.example.demo.domain.service.AccessManagementService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.jboss.logging.Logger;
@@ -24,7 +24,7 @@ public class FeatureController {
     private static final Logger logger = Logger.getLogger(FeatureController.class);
 
     @Autowired
-    AccessManagementServiceImpl accessManagementService;
+    AccessManagementService accessManagementService;
 
     /**
      * @param featureName feature name

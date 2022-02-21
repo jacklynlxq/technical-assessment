@@ -17,4 +17,8 @@ public class UserJpaEntity extends BaseEntity implements User {
 
     @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private List<AccessJpaEntity> accessList;
+
+    public UserJpaEntity(String userEmail){
+        this.userEmail = userEmail;
+    }
 }
